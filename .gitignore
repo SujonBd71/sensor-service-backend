@@ -1,7 +1,13 @@
 photo/__pycache__/
-sensors/migrations/
+sensors/__pycache__/
 sensors_services/__pycache__/
 lights/__pycache__/
+
+photo/migrations/__pycache__/
+sensors/migrations/__pycache__/
+sensors_services/migrations/__pycache__/
+lights/migrations/__pycache__/
+
 sensors_services/__pycache__/settings.cpython-37.pyc
 sensors_services/__pycache__/urls.cpython-37.pyc
 sensors_services/auth.py
