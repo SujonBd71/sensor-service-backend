@@ -5,10 +5,11 @@ class Light(models.Model):
     name =            models.CharField(max_length=50)
     ip =              models.CharField(max_length=50)
     broker =          models.CharField(max_length=50)
-    sub_topic           = models.CharField(max_length=50)
-    pub_topic           = models.CharField(max_length=50)
-    payload   = models.CharField(max_length=100)
-    status     = models.CharField(max_length=10)
+    command_topic           = models.CharField(max_length=50)
+    stat_topic           = models.CharField(max_length=50)
+    payload   = models.CharField(max_length=100, blank=True)
+    mac = models.CharField(max_length=50)
+    status     = models.CharField(max_length=15)
     
     def __str__(self):
         return self.name + ',' + self.broker

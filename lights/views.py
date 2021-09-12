@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from lights.models import Light
-# from sensors.serializers import  ScheduleSerializer
+from lights.serializers import  LightSerializer
 from rest_framework import viewsets, status
 from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
@@ -35,55 +35,23 @@ def getLight(request, light_id):
 
 @csrf_exempt
 def getLigtsListOrCreate(request):
-
+    print(request)
     
     if request.method == 'GET':
-        try:
-            s3_client = boto3.client('s3', region_name="us-east-1", 
-                aws_access_key_id="AKIAWV4YFBTBIV2KGF5U",
-                aws_secret_access_key="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")
-            
-            
-            # s3 = boto3.client(
-            #     "s3",
-            #     aws_access_key_id="AKIAWV4YFBTBIV2KGF5U",
-            #     aws_secret_access_key="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",
-            # )
-
-
-            bucket_name = "sujon-s3-va",
-            key='wedding/file.jpg',
-            sec_key = "DIQK8j/7M70/SabV9XbBOhb38k9yzz9lZQPPEPWR"
-            fields={"Content-Type": "image/jpg"},
-            # conditions=["starts-with", "$Content-Type", "image/"],
-            response = s3_client.generate_presigned_post(Bucket = bucket_name,
-                                                        Key = key,
-                                                        Fields=fields,
-                                                        
-                                                        ExpiresIn=3600)
-            print(response)
-            return HttpResponse("<h1>Hello, Flight Scheduler!</h1>")
-        except ClientError as e:
-            logging.error(e)
-            return None
-
-
-        return HttpResponse(response)
-        # schedules = Light.objects.all()
-        # for i in Light.objects.all().iterator():
-        #     print(i)
-        # schedule_serializer = ScheduleSerializer(schedules, many=True)
-    #    return JsonResponse({'list': [1,2,3]})
+        tutorials = Light.objects.all()
+        # title = request.GET.get('title', None)
+        # if title is not None:
+        #     tutorials = tutorials.filter(title__icontains=title)
+        
+        tutorials_serializer = LightSerializer(tutorials, many=True)
+        return JsonResponse(tutorials_serializer.data, safe=False)
 
     if request.method == 'POST':
-        schedule_data = JSONParser().parse(request)
-        schedule_serializer = ScheduleSerializer(data = schedule_data)
-        if schedule_serializer.is_valid():
-            schedule_serializer.save()
-            return JsonResponse(schedule_serializer.data, status=status.HTTP_201_CREATED)
-        return JsonResponse(schedule_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
-    if request.method == 'DELETE':
-        pass
-        # Schedule.objects.all().delete()
-    #     return HttpResponse(status=status.HTTP_204_NO_CONTENT) 
+        tutorial_data = JSONParser().parse(request)
+        tutorial_serializer = LightSerializer(data=tutorial_data)
+        if tutorial_serializer.is_valid():
+            tutorial_serializer.save()
+            return JsonResponse(tutorial_serializer.data, status=status.HTTP_201_CREATED) 
+        return JsonResponse(tutorial_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+   

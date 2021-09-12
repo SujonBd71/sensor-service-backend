@@ -22,11 +22,6 @@ AWS_STORAGE_BUCKET_NAME = 'sujon-static'
 def index(request):
     return HttpResponse("<h1>Hello, Flight Scheduler!</h1>")
 
-# class UserViewSet(viewsets.ModelViewSet):
-#     queryset = User.objects.all()
-#     # serializer_class = UserSerializer
-
-
 @csrf_exempt
 def getPhoto(request, photo_id):
     def generate_presigned_url(bucket_name, object_key, expiry=3600):
