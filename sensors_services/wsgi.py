@@ -14,3 +14,9 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sensors_services.settings')
 
 application = get_wsgi_application()
+
+# from MQTT import MQTTBroker
+# broker = MQTTBroker.MQTTBroker("192.168.1.151", 1883)
+# broker.connect()
+
+# broker.loopStart()
