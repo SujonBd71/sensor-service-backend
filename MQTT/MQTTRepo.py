@@ -1,9 +1,12 @@
+from MQTT  import MongoDb
+
 class MQTTRepo():
     def __init__(self, mqttBroker) -> None:
 
-        #load from DB
+        self.db = MongoDb.MongoDb()
+        self.db.connect()
+        self.db.find()
         
-
         self.topicToSubscriber = {}
         self.MqttBroker = mqttBroker
     
