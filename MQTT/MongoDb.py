@@ -12,9 +12,11 @@ class MongoDb():
 
     def find(self, dbName = "SensorDB", collection = "testDB", query = {}):
         db = self.client.SensorDB
-        lightCol = db["testDB"]
+        lightCol = db[collection]
         ls = lightCol.find({})
 
         print()
         for document in ls:
             print(document)
+        return ls
+        

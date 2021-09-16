@@ -5,12 +5,10 @@ from MQTT import MQTTBroker
 from MQTT import MQTTRepo
 
 
-broker = MQTTBroker.getBroker()
+repo= MQTTRepo.getRepo()
+repo.LoadLights()
 
-def createTopicRepo():
-    repo = MQTTRepo.MQTTRepo(broker)
 
-createTopicRepo()
 
 
 
