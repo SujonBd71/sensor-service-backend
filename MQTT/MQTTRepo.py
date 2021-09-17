@@ -10,6 +10,7 @@ class MQTTRepo():
         # self.db.find()
         
         self.topicToSubscriber = {}
+        self.topics = {}
         self.mqttBroker = mqttBroker
         self.mqttBroker.set_messageHandler(self.on_message)
         self.mqttBroker.connect()
@@ -39,11 +40,12 @@ class MQTTRepo():
 
     def on_message(self, client, userdata, msg):
         print("#############")
-        print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))  
+        print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))
+
+        #cache
+        self.topics[msg.topic] =   str(msg.payload)
 
     
-
-
 repo = None
 
 def createTopicRepo():
