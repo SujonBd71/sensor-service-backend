@@ -19,15 +19,16 @@ class MQTTRepo():
         
     def LoadLights(self):
         ls = self.db.find(collection="lights_light")
-
-        
         for l in ls:
             print(l["stat_topic"])
             self.addSubscriber(l["stat_topic"])
 
 
     def LoadSensors(self):
-        pass
+        ls = self.db.find(collection="lights_light")
+        for l in ls:
+            print(l["stat_topic"])
+            self.addSubscriber(l["stat_topic"])
 
 
     def addSubscriber(self,  topic):

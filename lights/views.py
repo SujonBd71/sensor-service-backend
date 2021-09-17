@@ -29,16 +29,17 @@ def index(request):
 
 @csrf_exempt
 def getLight(request, light_id):
-    return JsonResponse({'foo': str(light_id)})
-    # # return HttpResponse("<h1>Hello, Flight Scheduler!</h1>")
-    # return lightView.create(request)
+    light = Light(name="living room")
+    print(light)
+    tutorials_serializer = LightSerializer(light)
+    return JsonResponse(tutorials_serializer.data, safe=False)
 
 @csrf_exempt
 def getLigtsListOrCreate(request):
     print(request)
     
     if request.method == 'GET':
-        tutorials = Light.objects.all()
+        tutorials = Light.objects.filter()
         # title = request.GET.get('title', None)
         # if title is not None:
         #     tutorials = tutorials.filter(title__icontains=title)
