@@ -23,6 +23,8 @@ class MQTTRepo():
             print(l["stat_topic"])
             self.addSubscriber(l["stat_topic"])
 
+    def getLight(self, topic):
+        return self.topics[topic]
 
     def LoadSensors(self):
         ls = self.db.find(collection="lights_light")

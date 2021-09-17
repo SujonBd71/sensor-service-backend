@@ -14,7 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 import logging
 import boto3
 from botocore.exceptions import ClientError
-
+from MQTT import MQTTRepo
 
 from . import lightView
 
@@ -31,8 +31,13 @@ def index(request):
 def getLight(request, light_id):
     # light = Light(name="living room")
     light= Light.objects.get(id=light_id)
-    print(light)
+    repo= MQTTRepo.getRepo()
+    print(light.stat_topic)
+    light.status = repo.getLight(light.stat_topic)
+    print(light.stat_topic)
     tutorials_serializer = LightSerializer(light)
+ 
+    print(tutorials_serializer)
     return JsonResponse(tutorials_serializer.data, safe=False)
 
 @csrf_exempt

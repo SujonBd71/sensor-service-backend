@@ -40,8 +40,6 @@ class MQTTBroker():
         print("subscribing")
         self.client.subscribe("stat/living_room_light/POWER", qos=1) 
 
-
-    
     def publish(self, topic, msg):
         pass
     
