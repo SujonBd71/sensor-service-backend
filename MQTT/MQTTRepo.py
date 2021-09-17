@@ -1,33 +1,47 @@
+
 from MQTT  import MongoDb
 from . import MQTTBroker
 
 class MQTTRepo():
     def __init__(self, mqttBroker) -> None:
-
         self.db = MongoDb.MongoDb()
+
         self.db.connect()
-        self.db.find()
+        # self.db.find()
         
         self.topicToSubscriber = {}
-        self.MqttBroker = mqttBroker
+        self.mqttBroker = mqttBroker
+        self.mqttBroker.set_messageHandler(self.on_message)
+        self.mqttBroker.connect()
+        self.mqttBroker.loopStart()
     
         
     def LoadLights(self):
         ls = self.db.find(collection="lights_light")
+
         
+        for l in ls:
+            print(l["stat_topic"])
+            self.addSubscriber(l["stat_topic"])
 
 
     def LoadSensors(self):
         pass
 
 
-    def addSubscriber(self, subscriber, topic):
-        self.MqttBroker.subscribe(topic)
+    def addSubscriber(self,  topic):
+        self.mqttBroker.subscribe(topic)
         
     def removeSubscriber():
         pass
     def publish():
         pass
+
+    def on_message(self, client, userdata, msg):
+        print("#############")
+        print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))  
+
+    
 
 
 repo = None
