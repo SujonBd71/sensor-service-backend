@@ -6,7 +6,7 @@ app_name = 'lights'
 urlpatterns = [
     # url(r'^$', views.index, name='index'),
     url(r'^$', views.getLigtsListOrCreate,name='lights'),
-    url(r'^(?P<light_id>[0-9]+)/$', views.getLight,name='light'),
+    url(r'^(?P<light_id>[a-f0-9]+)/$', views.getLight,name='light'),
     # url(r'^(?P<album_id>[0-9]+)/delete_album/$', views.getLight, name='delete_album'),
 
     # url(r'^register/$', views.register, name='register'),

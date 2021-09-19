@@ -13,7 +13,7 @@
                 "runserver"
             ],
             "django": true,
-            "python.pythonPath": "C:/Sujon/python-venv/virtual-env/django_3_2_7/Scripts/python"
+            "python.pythonPath": "C:/Sujon/python-venv/virtual-env/django_3_2_7/Scripts/python.exe"
         }
     ]
 }

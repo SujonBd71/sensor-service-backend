@@ -23,7 +23,7 @@ class MQTTRepo():
             print(l["stat_topic"])
             self.addSubscriber(l["stat_topic"])
 
-    def getLight(self, topic):
+    def getStat(self, topic):
         return self.topics[topic]
 
     def LoadSensors(self):
@@ -31,7 +31,6 @@ class MQTTRepo():
         for l in ls:
             print(l["stat_topic"])
             self.addSubscriber(l["stat_topic"])
-
 
     def addSubscriber(self,  topic):
         self.mqttBroker.subscribe(topic)

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from MQTT import MQTTRepo
 # Create your views here.
 from sensors_services.settings import SECRET_KEY
 from django.shortcuts import render
@@ -32,9 +32,27 @@ def index(request):
 
 @csrf_exempt
 def getSensor(request, sensor_id):
-    return JsonResponse({'foo': str(sensor_id)})
-    # # return HttpResponse("<h1>Hello, Flight Scheduler!</h1>")
-    # return lightView.create(request)
+    # light = Light(name="living room")
+    if request.method == 'GET':
+        light= Sensor.objects.get(id=sensor_id)
+        repo= MQTTRepo.getRepo()
+        print(light.stat_topic)
+        light.status = repo.getStat(light.stat_topic)
+        print(light.stat_topic)
+        tutorials_serializer = SensorSerializer(light)
+    
+        print(tutorials_serializer)
+        return JsonResponse(tutorials_serializer.data, safe=False)
+    
+    if request.method == 'PUT':
+        tutorial_data = JSONParser().parse(request)
+        tutorial_serializer = SensorSerializer(data=tutorial_data)
+        if tutorial_serializer.is_valid():
+            tutorial_serializer.save()
+            return JsonResponse(tutorial_serializer.data, status=status.HTTP_200_OK) 
+        return JsonResponse(tutorial_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 @csrf_exempt
 def getSensorsOrCreate(request):
@@ -48,10 +66,10 @@ def getSensorsOrCreate(request):
 
     if request.method == 'POST':
         tutorial_data = JSONParser().parse(request)
+        # tutorial_serializer = tutorial_data
         tutorial_serializer = SensorSerializer(data=tutorial_data)
         if tutorial_serializer.is_valid():
             tutorial_serializer.save()
             return JsonResponse(tutorial_serializer.data, status=status.HTTP_201_CREATED) 
         return JsonResponse(tutorial_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-   
