@@ -19,7 +19,7 @@ from django.views.decorators.csrf import csrf_exempt
 import logging
 import boto3
 from botocore.exceptions import ClientError
-
+import uuid
 
 # Create your views here.
 def index(request):
@@ -32,9 +32,10 @@ def index(request):
 
 @csrf_exempt
 def getSensor(request, sensor_id):
+    print(request)
     # light = Light(name="living room")
     if request.method == 'GET':
-        light= Sensor.objects.get(id=sensor_id)
+        light= Sensor.objects.get(id= uuid.UUID(sensor_id))
         repo= MQTTRepo.getRepo()
         print(light.stat_topic)
         light.status = repo.getStat(light.stat_topic)
@@ -45,8 +46,11 @@ def getSensor(request, sensor_id):
         return JsonResponse(tutorials_serializer.data, safe=False)
     
     if request.method == 'PUT':
+        light= Sensor.objects.get(id= uuid.UUID(sensor_id))
         tutorial_data = JSONParser().parse(request)
+        tutorial_data['id'] = uuid.uuid4()
         tutorial_serializer = SensorSerializer(data=tutorial_data)
+        print(tutorial_data)
         if tutorial_serializer.is_valid():
             tutorial_serializer.save()
             return JsonResponse(tutorial_serializer.data, status=status.HTTP_200_OK) 
@@ -67,6 +71,7 @@ def getSensorsOrCreate(request):
     if request.method == 'POST':
         tutorial_data = JSONParser().parse(request)
         # tutorial_serializer = tutorial_data
+        tutorial_data['id'] = uuid.uuid4()
         tutorial_serializer = SensorSerializer(data=tutorial_data)
         if tutorial_serializer.is_valid():
             tutorial_serializer.save()

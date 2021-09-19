@@ -38,7 +38,8 @@ class MQTTBroker():
     def subscribe(self, topic):
         # self.client.subscribe(topic) 
         print("subscribing")
-        self.client.subscribe("stat/living_room_light/POWER", qos=1) 
+        # self.client.subscribe("stat/living_room_light/POWER", qos=1) 
+        self.client.subscribe(topic, qos=1) 
 
     def publish(self, topic, msg):
         pass
@@ -49,16 +50,8 @@ class MQTTBroker():
     def loopStart(self):
         self.client.loop_start()
     
-# def on_connect(client, userdata, flags, rc):
-#     # client.subscribe("$SYS/#")
-#     print("Connected")
-#     print(client)
-#     print(userdata)
-#     print(rc)
 
-# def on_message(client, userdata, msg):
-#     # Do something
-#     pass
+
 
 broker = MQTTBroker("192.168.1.151", 1883)
 # broker.connect()
