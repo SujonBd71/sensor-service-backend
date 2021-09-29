@@ -65,6 +65,10 @@ def getSensorsOrCreate(request):
     if request.method == 'GET':
         tutorials = Sensor.objects.all()
 
+        repo= MQTTRepo.getRepo()
+        for t in tutorials:
+            t.status =  repo.getStat(t.stat_topic)
+
         tutorials_serializer = SensorSerializer(tutorials, many=True)
         return JsonResponse(tutorials_serializer.data, safe=False)
 

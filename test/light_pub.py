@@ -17,3 +17,4 @@ while True:
     (rc, mid) = client.publish("cmnd/living_room_light/POWER", str("OFF"), qos=1, retain=True)
     time.sleep(10)
     
+    

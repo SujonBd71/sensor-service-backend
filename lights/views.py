@@ -50,10 +50,9 @@ def getLigtsListOrCreate(request):
     if request.method == 'GET':
         tutorials = Light.objects.all()
         print(tutorials)
-        # title = request.GET.get('title', None)
-
-        # if title is not None:
-        #     tutorials = tutorials.filter(title__icontains=title)
+        repo= MQTTRepo.getRepo()
+        for t in tutorials:
+            t.status =  repo.getStat(t.stat_topic)
         
         tutorials_serializer = LightSerializer(tutorials, many=True)
         return JsonResponse(tutorials_serializer.data, safe=False)
