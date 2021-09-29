@@ -17,9 +17,27 @@ def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
 
 def on_message(client, userdata, msg):
-    print(msg.topic)
-    print(msg.payload) # <- do you mean this payload = {...} ?
-    payload = json.loads(msg.payload) # you can use json.loads to convert string to json
+    # print(msg.topic)
+    # print(msg.payload) # <- do you mean this payload = {...} ?
+    # payload = json.loads(msg.payload)
+    # print(payload)
+
+    # print("#############")
+    # print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))
+
+    # #cache
+    # y = json.load(str(msg.payload))
+    # print(y)
+    topic=msg.topic
+    m_decode=str(msg.payload.decode("utf-8","ignore"))
+    print("data Received type",type(m_decode))
+    print("data Received",m_decode)
+    print("Converting from Json to Object")
+    m_in=json.loads(m_decode) #decode json data
+    print(type(m_in))
+    print(m_in)
+
+
 
 
 def on_publish(mosq, obj, mid):

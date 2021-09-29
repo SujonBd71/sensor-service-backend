@@ -1,7 +1,7 @@
 
 from MQTT  import MongoDb
 from . import MQTTBroker
-
+import json
 class MQTTRepo():
     def __init__(self, mqttBroker) -> None:
         self.db = MongoDb.MongoDb()
@@ -24,7 +24,9 @@ class MQTTRepo():
             self.addSubscriber(l["stat_topic"])
 
     def getStat(self, topic):
-        return self.topics[topic]
+        if topic in self.topics:
+            return self.topics[topic]
+        return ""
 
     def LoadSensors(self):
         print("")
@@ -47,8 +49,12 @@ class MQTTRepo():
         print("#############")
         print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))
 
+        m_decode=str(msg.payload.decode("utf-8","ignore"))
+        m_in=json.loads(m_decode)
+
         #cache
-        self.topics[msg.topic] =   str(msg.payload)
+        self.topics[msg.topic] =  m_in
+        print(m_in)
 
     
 repo = None

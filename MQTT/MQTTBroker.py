@@ -29,8 +29,9 @@ class MQTTBroker():
 
    
     def on_message(self, client, userdata, msg):
-        print("#############")
-        print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))  
+        pass
+        # print("#############")
+        # print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))  
 
     def on_subscribe(self,client, userdata, mid, granted_qos):
         print("Subscribed: "+str(mid)+" "+str(granted_qos))

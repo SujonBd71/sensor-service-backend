@@ -34,6 +34,7 @@ class ObjectIdField(serializers.Field):
 
 class SensorSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(format='hex')
+    status = serializers.JSONField()
     class Meta:
         model = Sensor
         fields = (  'id',

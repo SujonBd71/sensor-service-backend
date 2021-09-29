@@ -13,7 +13,7 @@ class Sensor(models.Model):
     stat_topic           = models.CharField(max_length=50)
     payload   = models.CharField(max_length=100, blank=True)
     mac = models.CharField(max_length=50)
-    status     = models.CharField(max_length=15)
+    status     = models.JSONField(max_length=500)
     
     def __str__(self):
         return self.name + ',' + self.broker
