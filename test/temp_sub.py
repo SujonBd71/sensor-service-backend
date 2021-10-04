@@ -33,7 +33,12 @@ def on_message(client, userdata, msg):
     print("data Received type",type(m_decode))
     print("data Received",m_decode)
     print("Converting from Json to Object")
-    m_in=json.loads(m_decode) #decode json data
+    # m_in=json.loads(m_decode) #decode json data
+    if type(m_decode) == "json":
+        m_in=json.loads(m_decode) #decode json data
+    else:
+        m_in = m_decode
+
     print(type(m_in))
     print(m_in)
 

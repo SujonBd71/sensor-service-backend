@@ -50,7 +50,11 @@ class MQTTRepo():
         print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))
 
         m_decode=str(msg.payload.decode("utf-8","ignore"))
-        m_in=json.loads(m_decode)
+
+        if type(m_decode) == "json":
+            m_in=json.loads(m_decode) #decode json data
+        else:
+            m_in = m_decode
 
         #cache
         self.topics[msg.topic] =  m_in
