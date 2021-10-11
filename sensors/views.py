@@ -53,6 +53,7 @@ def getSensor(request, sensor_id):
         tutorial_serializer = SensorSerializer(data=tutorial_data)
         print(tutorial_data)
         if tutorial_serializer.is_valid():
+            #add topic to subscriptions list
             tutorial_serializer.save()
             return JsonResponse(tutorial_serializer.data, status=status.HTTP_200_OK) 
         return JsonResponse(tutorial_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -91,6 +92,7 @@ def getSensorsOrCreate(request):
         tutorial_serializer = SensorSerializer(data=tutorial_data)
         if tutorial_serializer.is_valid():
             tutorial_serializer.save()
+            MQTTRepo.getRepo().addSubscriber(tutorial_data["stat_topic"])
             return JsonResponse(tutorial_serializer.data, status=status.HTTP_201_CREATED) 
         return JsonResponse(tutorial_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

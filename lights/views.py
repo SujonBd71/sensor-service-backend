@@ -59,13 +59,13 @@ def getLigtsListOrCreate(request):
 
     if request.method == 'POST':
         tutorial_data = JSONParser().parse(request)
-        print("json parsed data")
-        print(tutorial_data)
         tutorial_data['id'] = uuid.uuid4()
         tutorial_serializer = LightSerializer(data=tutorial_data)
         if tutorial_serializer.is_valid():
-            print("saving new object")
             tutorial_serializer.save()
+            print("saving")
+            print(tutorial_serializer)
+            MQTTRepo.getRepo().addSubscriber(tutorial_data["stat_topic"])
             return JsonResponse(tutorial_serializer.data, status=status.HTTP_201_CREATED) 
         return JsonResponse(tutorial_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

@@ -1,5 +1,8 @@
-fruits = ["mango", "apple", "orange"]
-
-for i in range(0,3):
-    print(fruits[i])
-
+wifis:
+ wlan0:
+   dhcp4: true
+   optional: true
+   access-points:
+     SweetHome:
+       password: "SweetHome116"
+ 
