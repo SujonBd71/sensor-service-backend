@@ -45,13 +45,20 @@ class MQTTRepo():
     def publish():
         pass
 
+
     def on_message(self, client, userdata, msg):
+        def is_json(myjson):
+            try:
+                json_object = json.loads(myjson)
+            except ValueError as e:
+                return False
+            return True
         print("#############")
         print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))
 
         m_decode=str(msg.payload.decode("utf-8","ignore"))
 
-        if type(m_decode) == "json":
+        if is_json(m_decode):
             m_in=json.loads(m_decode) #decode json data
         else:
             m_in = m_decode
