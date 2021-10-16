@@ -54,7 +54,8 @@ class MQTTBroker():
 
 
 
-broker = MQTTBroker("192.168.1.151", 1883)
+
+broker = MQTTBroker("192.168.1.50", 1883)
 # broker.connect()
 
 def getBroker():
