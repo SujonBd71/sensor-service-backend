@@ -46,7 +46,7 @@ class MQTTBroker():
         pass
     
     def connect(self):
-        self.client.connect("192.168.1.151", 1883, 60)
+        self.client.connect("192.168.1.50", 1883, 60)
     
     def loopStart(self):
         self.client.loop_start()
