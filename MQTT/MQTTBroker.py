@@ -43,7 +43,7 @@ class MQTTBroker():
         self.client.subscribe(topic, qos=1) 
 
     def publish(self, topic, msg):
-        pass
+        self.client.publish(topic, msg, qos=1, retain=True)
     
     def connect(self):
         self.client.connect("192.168.1.50", 1883, 60)

@@ -6,9 +6,12 @@ import subprocess
 # sensor = Adafruit_DHT.DHT22
 pin = 4
 
+test = "test/"
+# test = ""
+
 
 Broker = "192.168.1.151"
-temp_pub_topic = "living_room/weather";
+temp_pub_topic = test + "living_room/weather";
 hum_pub_topic = "living_room/weather/humidity";
 
 
@@ -43,8 +46,9 @@ while True:
     humidity = round(humidity, 4);
     
     temperature = ToFarentHiet(temperature)
-    payload=json.dumps({"temp": temperature,"hum":  humidity,})
+    payload=json.dumps({"temp": temperature,"hum":  humidity})
 
+    print(type(payload))
     print(payload)
     
     client.publish(temp_pub_topic, payload);

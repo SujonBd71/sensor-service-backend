@@ -9,12 +9,12 @@ from django.contrib.auth.models import User
 from lights.models import Light
 from lights.serializers import  LightSerializer
 from rest_framework import viewsets, status
-from rest_framework.parsers import JSONParser
+from rest_framework.parsers import DataAndFiles, JSONParser
 from django.http.response import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import logging
 import boto3
-from botocore.exceptions import ClientError
+from botocore.exceptions import ClientError, EndpointConnectionError
 from MQTT import MQTTRepo
 
 from . import lightView
@@ -31,16 +31,27 @@ def index(request):
 @csrf_exempt
 def getLight(request, light_id):
     # light = Light(name="living room")
-    print(light_id)
-    light= Light.objects.get(id=uuid.UUID(light_id))
-    repo= MQTTRepo.getRepo()
-    print(light.stat_topic)
-    light.status = repo.getStat(light.stat_topic)
-    print(light.stat_topic)
-    tutorials_serializer = LightSerializer(light)
+    if request.method == 'GET':
+        print(light_id)
+        light= Light.objects.get(id=uuid.UUID(light_id))
+        repo= MQTTRepo.getRepo()
+        print(light.stat_topic)
+        light.status = repo.getStat(light.stat_topic)
+        print(light.stat_topic)
+        tutorials_serializer = LightSerializer(light)
+    
+        print(tutorials_serializer)
+        return JsonResponse(tutorials_serializer.data, safe=False)
+    elif request.method == 'PUT':
+        body = JSONParser().parse(request)
+        print(body)
+        print(body['command_topic'])
+        print(body['status'])
+        
+        MQTTRepo.getRepo().publish (body['command_topic'], body["status"])
  
-    print(tutorials_serializer)
-    return JsonResponse(tutorials_serializer.data, safe=False)
+        return JsonResponse({'foo':'bar'})
+
 
 @csrf_exempt
 def getLigtsListOrCreate(request):

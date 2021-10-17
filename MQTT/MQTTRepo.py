@@ -37,12 +37,13 @@ class MQTTRepo():
             print(l["stat_topic"])
             self.addSubscriber(l["stat_topic"])
 
+    def publish(self, topic, payload):
+        self.mqttBroker.publish(topic, payload)
+
     def addSubscriber(self,  topic):
         self.mqttBroker.subscribe(topic)
         
     def removeSubscriber():
-        pass
-    def publish():
         pass
 
 

@@ -3,10 +3,16 @@ from . import views
 
 app_name = 'lights'
 
+# 'polls/<str:poll_id>'
+# path('polls/<str:poll_id>', views.polls_detail)
+
 urlpatterns = [
     # url(r'^$', views.index, name='index'),
     url(r'^$', views.getLigtsListOrCreate,name='lights'),
-    url(r'^(?P<light_id>[a-f0-9]+)/$', views.getLight,name='light'),
+    # url(r'^(?P<light_id>[a-f0-9]+)/$', views.getLight,name='light'),
+    url(r'^(?P<light_id>[\w\-]+)/$', views.getLight,name='light'),
+    # url(r'^(?P<string>[\w\-]+)/$', views.getLight,name='light'),
+    # url('slug:light_id/$', views.getLight,name='light'),
     # url(r'^(?P<album_id>[0-9]+)/delete_album/$', views.getLight, name='delete_album'),
 
     # url(r'^register/$', views.register, name='register'),
